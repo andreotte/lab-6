@@ -20,7 +20,7 @@ namespace lab6
                 Random rand = new Random();
 
                 Console.WriteLine("Your random numbers: ");
-                for (int i = 0; i < 3; i++) // Change i < val to change number of random numbers generated
+                for (int i = 0; i < 1; i++) // Change i < val to change number of random numbers generated
                 {
                     int output = GetRandom(userInput[0] * userInput[1], userInput[1], rand);
                     Console.WriteLine(output);
