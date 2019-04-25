@@ -10,42 +10,70 @@ namespace lab6
     {
         static void Main(string[] args)
         {
-            //int.TryParse(userInput, out number);
+            bool play = true;
 
-            //if (number == 0)
-            //{
-            //    Console.WriteLine("Invalid input.");
-            //    return CollectInput();
-            //}
-            //else
-            //{
-            //    return number;
-            //}
-
-            //todo: add validation
-            Console.WriteLine("Enter the number of sides on the dice: ");
-            int sideNumber = Convert.ToInt16(Console.ReadLine());
-
-            //todo: add validation
-            Console.WriteLine("Enter the number of dice you want to roll: ");
-            int diceNumber = Convert.ToInt16(Console.ReadLine());
-
-            int maxRoll = Roll(sideNumber, diceNumber);
-
-            Random rand = new Random();
-            for (int i = 0; i < 10; i++)
+            // At the end of the game, ask user if thy wish to continue
+            while (play)
             {
-                int output = GetRandom(maxRoll, diceNumber, rand);
-                Console.WriteLine(output);
+                int[] userInput = CollectInput();
+
+                Random rand = new Random();
+
+                Console.WriteLine("Your random numbers: ");
+                for (int i = 0; i < 3; i++) // Change i < val to change number of random numbers generated
+                {
+                    int output = GetRandom(userInput[0] * userInput[1], userInput[1], rand);
+                    Console.WriteLine(output);
+                }
+
+                Console.WriteLine("Would you like to play again? (y/n)");
+                string continuePlaying = Console.ReadLine();
+
+                if (continuePlaying == "no" || continuePlaying == "n")
+                {
+                    play = false;
+                }
             }
         }
 
+        // Collect user input
+        public static int[] CollectInput()
+        {
+            int sideNumber;
+            int diceNumber;
+            int[] inputs = new int[2];
+
+            Console.WriteLine("Enter the number of sides on the dice: ");
+            string sides = Console.ReadLine();
+            Console.WriteLine("Enter the number of dice you want to roll: ");
+            string dice = Console.ReadLine();
+            Console.WriteLine();
+
+            // User input validation
+            int.TryParse(sides, out sideNumber);
+            int.TryParse(dice, out diceNumber);
+      
+            if (sideNumber == 0 || diceNumber == 0)
+            {
+                Console.WriteLine("Invalid input. Enter sides and dice number as integers.");
+                return CollectInput();
+            }
+            else
+            {
+                inputs[0] = sideNumber;
+                inputs[1] = diceNumber;
+                return inputs;
+            }       
+        }
+
+        // Generate a random number between number of dice (number of dice * 1) and highest possible roll totals (sides * dice)
         public static int GetRandom(int max, int diceNumber, Random rand)
         {
             int number = rand.Next(diceNumber, max + 1);
             return number;
         }
 
+        // Determine max possible
         public static int Roll(int sides, int dice)
         { 
             int maxRoll = sides * dice;
