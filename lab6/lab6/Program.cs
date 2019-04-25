@@ -10,9 +10,23 @@ namespace lab6
     {
         static void Main(string[] args)
         {
+            //int.TryParse(userInput, out number);
+
+            //if (number == 0)
+            //{
+            //    Console.WriteLine("Invalid input.");
+            //    return CollectInput();
+            //}
+            //else
+            //{
+            //    return number;
+            //}
+
+            //todo: add validation
             Console.WriteLine("Enter the number of sides on the dice: ");
             int sideNumber = Convert.ToInt16(Console.ReadLine());
 
+            //todo: add validation
             Console.WriteLine("Enter the number of dice you want to roll: ");
             int diceNumber = Convert.ToInt16(Console.ReadLine());
 
@@ -21,14 +35,14 @@ namespace lab6
             Random rand = new Random();
             for (int i = 0; i < 10; i++)
             {
-                int output = GetRandom(maxRoll, rand);
+                int output = GetRandom(maxRoll, diceNumber, rand);
                 Console.WriteLine(output);
             }
         }
 
-        public static int GetRandom(int max, Random rand)
+        public static int GetRandom(int max, int diceNumber, Random rand)
         {
-            int number = rand.Next(1, max + 1);
+            int number = rand.Next(diceNumber, max + 1);
             return number;
         }
 
